@@ -427,12 +427,19 @@ namespace ModComponentMapper
                 }
             }
 
-            if (modFoodComponent.AffectRest)
+            if (modFoodComponent.AffectConditionRestBuff)
+            {
+                ConditionRestBuff conditionRestBuff = ModUtils.GetOrCreateComponent<ConditionRestBuff>(modFoodComponent);
+                conditionRestBuff.m_ConditionRestBonus = modFoodComponent.ConditionRestBonus;
+                conditionRestBuff.m_NumHoursRestAffected = modFoodComponent.NumMinutesRestAffected / 60f;
+            }
+
+            if (modFoodComponent.AffectFatigue)
             {
                 FatigueBuff fatigueBuff = ModUtils.GetOrCreateComponent<FatigueBuff>(modFoodComponent);
-                fatigueBuff.m_InitialPercentDecrease = modFoodComponent.InstantRestChange;
-                fatigueBuff.m_RateOfIncreaseScale = modFoodComponent.RestFactor;
-                fatigueBuff.m_DurationHours = modFoodComponent.RestFactorMinutes / 60f;
+                fatigueBuff.m_InitialPercentDecrease = modFoodComponent.InstantFatigueChange;
+                fatigueBuff.m_RateOfIncreaseScale = modFoodComponent.FatigueFactor;
+                fatigueBuff.m_DurationHours = modFoodComponent.FatigueFactorMinutes / 60f;
             }
 
             if (modFoodComponent.AffectCold)
