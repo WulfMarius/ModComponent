@@ -67,18 +67,28 @@ namespace ModComponentAPI
         [Tooltip("Can it be opened by smashing?")]
         public bool OpeningWithSmashing;
 
+        [Header("Food/ConditionRestBuff")]
+        [Tooltip("Does this item buff 'Condition restore' while sleep? If not enabled, the other settings in this section will be ignored.")]
+        public bool AffectConditionRestBuff;
+        [Tooltip("How much is buff to per hour HP restore")]
+        [Range(0, 100)]
+        public float ConditionRestBonus= 2;
+        [Tooltip("Amount of in-game minutes the buff will be affected to condition rest")]
+        [Range(0, 600)]
+        public float NumMinutesRestAffected = 360;
+
         [Header("Food/Fatigue")]
-        [Tooltip("Does this item affect 'Rest'? If not enabled, the other settings in this section will be ignored.")]
-        public bool AffectRest;
+        [Tooltip("Does this item affect 'Fatigue'? If not enabled, the other settings in this section will be ignored.")]
+        public bool AffectFatigue;
         [Range(-100, 100)]
-        [Tooltip("How much 'Rest' is restored/drained immediately after consuming the item. Represents change in percentage points. Negative values drain rest, positive values restore rest.")]
-        public float InstantRestChange;
+        [Tooltip("How much 'Fatigue' is restored/drained immediately after consuming the item. Represents change in percentage points. Negative values increased fatigue, positive values decrease Fatigue.")]
+        public float InstantFatigueChange;
         [Tooltip("Factor for scaling how fast 'Rest' is drained after the item was consumed. Values below 1 drain less 'Rest' than normal, values above 1 drain more 'Rest' than normal. Applies to standing, sprinting, ...")]
         [Range(0, 10)]
-        public float RestFactor = 1;
+        public float FatigueFactor = 1;
         [Tooltip("Amount of in-game minutes the 'RestFactor' will be applied.")]
         [Range(1, 600)]
-        public int RestFactorMinutes = 60;
+        public int FatigueFactorMinutes = 60;
 
         [Header("Food/Cold")]
         [Tooltip("Does this item affect 'Cold'? If not enabled, the other settings in this section will be ignored.")]
