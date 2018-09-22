@@ -46,6 +46,7 @@
     <Compile Include="src\AlternativeAction.cs" />
     <Compile Include="src\ModBurnableComponent.cs" />
     <Compile Include="src\ModCookingPotComponent.cs" />
+    <Compile Include="src\ModFirstAidComponent.cs" />
     <Compile Include="src\ModLiquidItemComponent.cs" />
     <Compile Include="src\ModScentComponent.cs" />
     <Compile Include="src\ModStackableComponent.cs" />

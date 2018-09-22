@@ -57,7 +57,7 @@ namespace ModComponentMapper
                 ConfigureFireStarter(modComponent);
                 ConfigureAccelerant(modComponent);
                 ConfigureStackable(modComponent);
-
+                ConfigureFirstAid(modComponent);
                 ConfigureEquippable(modComponent);
                 ConfigureLiquidItem(modComponent);
                 ConfigureFood(modComponent);
@@ -626,6 +626,28 @@ namespace ModComponentMapper
             Scent scent = ModUtils.GetOrCreateComponent<Scent>(modScentComponent);
             scent.m_ScentCategory = ModUtils.TranslateEnumValue<ScentRangeCategory, ScentCategory>(modScentComponent.scentRangeCategory);
             return modScentComponent.GetScentIntensity();
+        }
+
+        private static void ConfigureFirstAid(ModComponent modComponent)
+        {
+            ModFirstAidComponent modFirstAidComponent = ModUtils.GetComponent<ModFirstAidComponent>(modComponent);
+            if (!modFirstAidComponent)
+            {
+                return;
+            }
+
+            FirstAidItem firstAidItem = ModUtils.GetOrCreateComponent<FirstAidItem>(modFirstAidComponent);
+            firstAidItem.m_HPIncrease = modFirstAidComponent.HPIncrease;
+            firstAidItem.m_ProvidesAntibiotics = modFirstAidComponent.ProvidesAntibiotics;
+            firstAidItem.m_KillsPain = modFirstAidComponent.KillsPain;
+            firstAidItem.m_AppliesBandage = modFirstAidComponent.AppliesBandage;
+            firstAidItem.m_AppliesSutures = modFirstAidComponent.AppliesSutures;
+            firstAidItem.m_StabalizesSprains = modFirstAidComponent.StabalizesSprains;
+            firstAidItem.m_CleansWounds = modFirstAidComponent.CleansWounds;
+            firstAidItem.m_TimeToUseSeconds = modFirstAidComponent.TimeToUseSeconds;
+            firstAidItem.m_UnitsPerUse = modFirstAidComponent.UnitsPerUse;
+            firstAidItem.m_UseAudio = modFirstAidComponent.UseAudio;
+
         }
 
         private static LocalizedString CreateLocalizedString(string key)
