@@ -66,6 +66,7 @@ namespace ModComponentMapper
                 ConfigureRifle(modComponent);
                 ConfigureClothing(modComponent);
                 ConfigureBurnable(modComponent);
+                ConfigureScent(modComponent);
 
                 ConfigureGearItem(modComponent);
 
@@ -610,6 +611,18 @@ namespace ModComponentMapper
             stackableItem.m_ShareStackWithGear = new StackableItem[0];
             stackableItem.m_Units = 1;
             stackableItem.m_UnitsPerItem = 1;
+        }
+
+        private static void ConfigureScent(ModComponent modComponent)
+        {
+            ModScentComponent modScentComponent = ModUtils.GetComponent<ModScentComponent>(modComponent);
+            if (modScentComponent == null)
+            {
+                return;
+            }
+
+            Scent scent = ModUtils.GetOrCreateComponent<Scent>(modScentComponent);
+            scent.m_ScentCategory = ModUtils.TranslateEnumValue<ScentRangeCategory, ScentCategory>(modScentComponent.scentRangeCategory);
         }
 
         private static LocalizedString CreateLocalizedString(string key)
