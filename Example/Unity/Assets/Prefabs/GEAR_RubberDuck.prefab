@@ -36,8 +36,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4108755419755902}
-  - component: {fileID: 114899100276084280}
-  - component: {fileID: 65326090075059054}
+  - component: {fileID: 114561703390832288}
+  - component: {fileID: 64694471943205014}
+  - component: {fileID: 114566352449028556}
+  - component: {fileID: 114548577338406358}
   m_Layer: 0
   m_Name: GEAR_RubberDuck
   m_TagString: Untagged
@@ -113,8 +115,8 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1194049156236800}
   m_Mesh: {fileID: 4300000, guid: 75e00a98ef8f31b40a7c2c164ee76b29, type: 3}
---- !u!65 &65326090075059054
-BoxCollider:
+--- !u!64 &64694471943205014
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -122,10 +124,12 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.075, y: 0.11, z: 0.1}
-  m_Center: {x: 0, y: 0.055, z: 0}
---- !u!114 &114899100276084280
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 9e6fc7bc0ec6b7d42bccb581b972c06e, type: 3}
+--- !u!114 &114548577338406358
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -133,28 +137,95 @@ MonoBehaviour:
   m_GameObject: {fileID: 1985896282193416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1344635434, guid: cf5f2c8efb027b3428c08def532eea40, type: 3}
+  m_Script: {fileID: 132620137, guid: cf5f2c8efb027b3428c08def532eea40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConsoleName: 
+  scentRangeCategory: 5
+--- !u!114 &114561703390832288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985896282193416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1682574900, guid: cf5f2c8efb027b3428c08def532eea40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConsoleName: RubberDuck
   Radial: 0
-  DisplayNameLocalizationId: GAMEPLAY_RubberDuck
-  DescriptionLocalizatonId: GAMEPLAY_RubberDuckDescription
+  DisplayNameLocalizationId: 
+  DescriptionLocalizatonId: 
+  InventoryCategory: 4
   InventoryActionLocalizationId: 
-  PickUpAudio: Play_DrawRubberDuck
+  PickUpAudio: 
   StowAudio: Play_InventoryStow
-  PutBackAudio: Play_DrawRubberDuck
+  PutBackAudio: 
   WornOutAudio: 
-  WeightKG: 0.1
-  MaxHP: 100
-  DaysToDecay: 0
+  WeightKG: 1
+  MaxHP: 10
+  DaysToDecay: 50
+  InitialCondition: 1
   InspectOnPickup: 1
   InspectDistance: 0.4
   InspectScale: {x: 1, y: 1, z: 1}
-  InspectAngles: {x: 20, y: 135, z: -15}
+  InspectAngles: {x: 0, y: 0, z: 0}
   InspectOffset: {x: 0, y: 0, z: 0}
-  EquippedModelPrefab: {fileID: 1334007787735594, guid: 1c658d1d1b7525042a2544c5d21de017,
-    type: 2}
-  ImplementationType: RubberDuck.Implementation,Rubber-Duck
-  EquippingAudio: 
-  EquippedModel: {fileID: 0}
+  Cooking: 0
+  type: 0
+  CookingMinutes: 1
+  BurntMinutes: 1
+  CookingWaterRequired: 0
+  CookingUnitsRequired: 1
+  CookingResult: {fileID: 0}
+  CookingAudio: 
+  StartCookingAudio: 
+  DaysToDecayOutdoors: 50
+  DaysToDecayIndoors: 25
+  Calories: 100
+  Servings: 1
+  EatingTime: 1
+  EatingAudio: 
+  EatingPackagedAudio: 
+  ThirstEffect: 0
+  FoodPoisoning: 0
+  FoodPoisoningLowCondition: 0
+  ParasiteRiskIncrements: []
+  Natural: 1
+  Raw: 0
+  Drink: 0
+  Meat: 0
+  Fish: 0
+  Canned: 0
+  Opening: 0
+  OpeningWithCanOpener: 0
+  OpeningWithKnife: 0
+  OpeningWithHatchet: 0
+  OpeningWithSmashing: 0
+  AffectConditionRestBuff: 1
+  ConditionRestBonus: 2
+  NumMinutesRestAffected: 360
+  AffectFatigue: 0
+  InstantFatigueChange: 0
+  FatigueFactor: 1
+  FatigueFactorMinutes: 60
+  AffectCold: 0
+  InstantColdChange: 20
+  ColdFactor: 0.5
+  ColdFactorMinutes: 60
+  ContainsAlcohol: 0
+  AlcoholPercentage: 0
+  AlcoholUptakeMinutes: 45
+--- !u!114 &114566352449028556
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985896282193416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 881546107, guid: cf5f2c8efb027b3428c08def532eea40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MultipleUnitText: RubberDuks
+  StackSprite: and more

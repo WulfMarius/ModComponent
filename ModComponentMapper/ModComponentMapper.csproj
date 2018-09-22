@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\Documents\TLD\mods\sourses\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\TheLongDark\tld_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -39,9 +42,6 @@
     </Reference>
     <Reference Include="AssetLoader">
       <HintPath>..\..\..\..\Documents\TLD\mods\sourses\AssetLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="Harmony">
-      <HintPath>..\..\..\..\Documents\TLD\mods\sourses\Harmony.dll</HintPath>
     </Reference>
     <Reference Include="ModComponentAPI">
       <HintPath>..\ModComponentAPI\bin\Debug\ModComponentAPI.dll</HintPath>

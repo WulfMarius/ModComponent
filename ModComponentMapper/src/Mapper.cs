@@ -66,7 +66,6 @@ namespace ModComponentMapper
                 ConfigureRifle(modComponent);
                 ConfigureClothing(modComponent);
                 ConfigureBurnable(modComponent);
-                ConfigureScent(modComponent);
 
                 ConfigureGearItem(modComponent);
 
@@ -486,6 +485,9 @@ namespace ModComponentMapper
 
             gearItem.m_ConditionTableType = GetConditionTableType(modComponent);
 
+            
+            gearItem.m_ScentIntensity = ConfigureScent(modComponent);
+
             gearItem.Awake();
         }
 
@@ -613,16 +615,17 @@ namespace ModComponentMapper
             stackableItem.m_UnitsPerItem = 1;
         }
 
-        private static void ConfigureScent(ModComponent modComponent)
+        private static float ConfigureScent(ModComponent modComponent)
         {
             ModScentComponent modScentComponent = ModUtils.GetComponent<ModScentComponent>(modComponent);
             if (modScentComponent == null)
             {
-                return;
+                return 0f;
             }
 
             Scent scent = ModUtils.GetOrCreateComponent<Scent>(modScentComponent);
             scent.m_ScentCategory = ModUtils.TranslateEnumValue<ScentRangeCategory, ScentCategory>(modScentComponent.scentRangeCategory);
+            return modScentComponent.GetScentIntensity();
         }
 
         private static LocalizedString CreateLocalizedString(string key)
