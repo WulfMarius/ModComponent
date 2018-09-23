@@ -57,7 +57,7 @@ namespace ModComponentMapper
                 ConfigureFireStarter(modComponent);
                 ConfigureAccelerant(modComponent);
                 ConfigureStackable(modComponent);
-
+                ConfigureFirstAid(modComponent);
                 ConfigureEquippable(modComponent);
                 ConfigureLiquidItem(modComponent);
                 ConfigureFood(modComponent);
@@ -427,12 +427,19 @@ namespace ModComponentMapper
                 }
             }
 
-            if (modFoodComponent.AffectRest)
+            if (modFoodComponent.AffectConditionRestBuff)
+            {
+                ConditionRestBuff conditionRestBuff = ModUtils.GetOrCreateComponent<ConditionRestBuff>(modFoodComponent);
+                conditionRestBuff.m_ConditionRestBonus = modFoodComponent.ConditionRestBonus;
+                conditionRestBuff.m_NumHoursRestAffected = modFoodComponent.NumMinutesRestAffected / 60f;
+            }
+
+            if (modFoodComponent.AffectFatigue)
             {
                 FatigueBuff fatigueBuff = ModUtils.GetOrCreateComponent<FatigueBuff>(modFoodComponent);
-                fatigueBuff.m_InitialPercentDecrease = modFoodComponent.InstantRestChange;
-                fatigueBuff.m_RateOfIncreaseScale = modFoodComponent.RestFactor;
-                fatigueBuff.m_DurationHours = modFoodComponent.RestFactorMinutes / 60f;
+                fatigueBuff.m_InitialPercentDecrease = modFoodComponent.InstantFatigueChange;
+                fatigueBuff.m_RateOfIncreaseScale = modFoodComponent.FatigueFactor;
+                fatigueBuff.m_DurationHours = modFoodComponent.FatigueFactorMinutes / 60f;
             }
 
             if (modFoodComponent.AffectCold)
@@ -477,6 +484,9 @@ namespace ModComponentMapper
             gearItem.m_WornOutAudio = modComponent.WornOutAudio;
 
             gearItem.m_ConditionTableType = GetConditionTableType(modComponent);
+
+            
+            gearItem.m_ScentIntensity = ConfigureScent(modComponent);
 
             gearItem.Awake();
         }
@@ -603,6 +613,41 @@ namespace ModComponentMapper
             stackableItem.m_ShareStackWithGear = new StackableItem[0];
             stackableItem.m_Units = 1;
             stackableItem.m_UnitsPerItem = 1;
+        }
+
+        private static float ConfigureScent(ModComponent modComponent)
+        {
+            ModScentComponent modScentComponent = ModUtils.GetComponent<ModScentComponent>(modComponent);
+            if (modScentComponent == null)
+            {
+                return 0f;
+            }
+
+            Scent scent = ModUtils.GetOrCreateComponent<Scent>(modScentComponent);
+            scent.m_ScentCategory = ModUtils.TranslateEnumValue<ScentRangeCategory, ScentCategory>(modScentComponent.scentRangeCategory);
+            return modScentComponent.GetScentIntensity();
+        }
+
+        private static void ConfigureFirstAid(ModComponent modComponent)
+        {
+            ModFirstAidComponent modFirstAidComponent = ModUtils.GetComponent<ModFirstAidComponent>(modComponent);
+            if (!modFirstAidComponent)
+            {
+                return;
+            }
+
+            FirstAidItem firstAidItem = ModUtils.GetOrCreateComponent<FirstAidItem>(modFirstAidComponent);
+            firstAidItem.m_HPIncrease = modFirstAidComponent.HPIncrease;
+            firstAidItem.m_ProvidesAntibiotics = modFirstAidComponent.ProvidesAntibiotics;
+            firstAidItem.m_KillsPain = modFirstAidComponent.KillsPain;
+            firstAidItem.m_AppliesBandage = modFirstAidComponent.AppliesBandage;
+            firstAidItem.m_AppliesSutures = modFirstAidComponent.AppliesSutures;
+            firstAidItem.m_StabalizesSprains = modFirstAidComponent.StabalizesSprains;
+            firstAidItem.m_CleansWounds = modFirstAidComponent.CleansWounds;
+            firstAidItem.m_TimeToUseSeconds = modFirstAidComponent.TimeToUseSeconds;
+            firstAidItem.m_UnitsPerUse = modFirstAidComponent.UnitsPerUse;
+            firstAidItem.m_UseAudio = modFirstAidComponent.UseAudio;
+
         }
 
         private static LocalizedString CreateLocalizedString(string key)
