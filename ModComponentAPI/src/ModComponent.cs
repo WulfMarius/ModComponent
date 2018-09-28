@@ -59,6 +59,10 @@ namespace ModComponentAPI
         public Vector3 InspectAngles = Vector3.zero;
         [Tooltip("Offset from the center during inspect.")]
         public Vector3 InspectOffset = Vector3.zero;
+        [Tooltip("Inspet mode mesh. Model to review in inspect mode")]
+        public GameObject InspectModeMesh;
+        [Tooltip("Normal mode mesh. In world model(mesh)")]
+        public GameObject NormalMesh;
 
         public string GetEffectiveConsoleName()
         {
