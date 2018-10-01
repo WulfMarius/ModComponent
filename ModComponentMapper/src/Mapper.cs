@@ -523,6 +523,14 @@ namespace ModComponentMapper
             inspect.m_Scale = modComponent.InspectScale;
             inspect.m_Angles = modComponent.InspectAngles;
             inspect.m_Offset = modComponent.InspectOffset;
+
+            if (modComponent.NormalMesh != null && modComponent.InspectModeMesh != null)
+            {
+                inspect.m_NormalMesh = modComponent.NormalMesh;
+                inspect.m_InspectModeMesh = modComponent.InspectModeMesh;
+                inspect.m_NormalMesh.SetActive(true);
+                inspect.m_InspectModeMesh.SetActive(false);
+            }
         }
 
         private static void ConfigureRepairable(ModComponent modComponent)
