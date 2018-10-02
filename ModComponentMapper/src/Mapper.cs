@@ -59,6 +59,7 @@ namespace ModComponentMapper
                 ConfigureStackable(modComponent);
                 ConfigureBurnable(modComponent);
                 ScentMapper.Configure(modComponent);
+                ConfigureEvolve(modComponent);
 
                 ConfigureEquippable(modComponent);
                 ConfigureLiquidItem(modComponent);
@@ -511,6 +512,41 @@ namespace ModComponentMapper
             harvest.m_YieldGearUnits = modHarvestableComponent.YieldCounts;
         }
 
+        private static void ConfigureEvolve(ModComponent modComponent)
+        {
+            ModEvolveComponent modEvolveComponent = ModUtils.GetComponent<ModEvolveComponent>(modComponent);
+            if (modEvolveComponent == null)
+            {
+                return;
+            }
+
+            EvolveItem evolveItem = ModUtils.GetOrCreateComponent<EvolveItem>(modEvolveComponent);
+            if (modEvolveComponent.GearItemToBecome != null && string.IsNullOrEmpty(modEvolveComponent.GearItemName))
+            {
+                GearItem gearItemToBecome = modEvolveComponent.GearItemToBecome.GetComponent<GearItem>();
+                if (gearItemToBecome == null)
+                {
+                    // not mapped yet, do it now
+                    Mapper.Map(modEvolveComponent.GearItemToBecome);
+                    gearItemToBecome = modEvolveComponent.GearItemToBecome.GetComponent<GearItem>();
+                }
+                evolveItem.m_GearItemToBecome = gearItemToBecome;
+            }
+            else if (modEvolveComponent.GearItemToBecome == null && !string.IsNullOrEmpty(modEvolveComponent.GearItemName))
+            {
+                evolveItem.m_GearItemToBecome = ModUtils.GetMatchingItem<GearItem>(modEvolveComponent.GearItemName);
+            }
+            else
+            {
+                throw new ArgumentException("Should be only one item to become. There are two item");
+            }
+            
+            evolveItem.m_StartEvolvePercent = modEvolveComponent.StartEvolvePercent;
+            evolveItem.m_TimeToEvolveGameDays = modEvolveComponent.TimeToEvolveGameDays;
+            evolveItem.m_RequireIndoors = modEvolveComponent.RequireIndoors;
+
+        }
+
         private static void ConfigureInspect(ModComponent modComponent)
         {
             if (!modComponent.InspectOnPickup)
@@ -523,6 +559,14 @@ namespace ModComponentMapper
             inspect.m_Scale = modComponent.InspectScale;
             inspect.m_Angles = modComponent.InspectAngles;
             inspect.m_Offset = modComponent.InspectOffset;
+
+            if (modComponent.NormalMesh != null && modComponent.InspectModeMesh != null)
+            {
+                inspect.m_NormalMesh = modComponent.NormalMesh;
+                inspect.m_InspectModeMesh = modComponent.InspectModeMesh;
+                inspect.m_NormalMesh.SetActive(true);
+                inspect.m_InspectModeMesh.SetActive(false);
+            }
         }
 
         private static void ConfigureRepairable(ModComponent modComponent)
